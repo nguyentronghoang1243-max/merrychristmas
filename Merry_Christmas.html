@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Sách & Tuyết rơi</title>
+
+<style>
+    body{
+        margin:0;
+        padding:0;
+        background:#0a0e2e;
+        overflow:hidden;
+        height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        font-family:'Poppins', sans-serif;
+    }
+
+    /* Cuốn sách */
+    .book{
+        width: 600px;
+        height: 300px;
+        background:white;
+        position:relative;
+        border-radius:10px;
+        transform: perspective(800px) rotateX(15deg);
+        box-shadow:0 25px 60px rgba(255,255,255,.35);
+        overflow:hidden;
+        
+    }
+
+    /* Trang sách */
+    .page{
+        width:100%;
+        height:100%;
+        position:absolute;
+        top:0;
+        background:#f7f2e3;
+    }
+
+    .left{left:0; border-radius:10px 0 0 10px;}
+    .right{right:0; border-radius:0 10px 10px 0;}
+
+    /* TEXT EFFECT */
+    #text{
+        position:absolute;
+        top:50%;
+        left:50%;
+        transform:translate(-50%,-50%);
+        font-size: 34px;
+        color:#ffffff;
+        text-align:center;
+        width:100%;
+        padding:10px 0;
+        z-index: 2;
+
+        /* viền sáng */
+        text-shadow:
+            0 0 5px #fff,
+            0 0 12px #a2cfff,
+            0 0 20px #77bbff,
+            0 0 35px #4faaff;
+    }
+
+    /* SNOW */
+    .snow{
+        position:absolute;
+        top:0;
+        width:10px;
+        height:10px;
+        background:rgb(255, 255, 255);
+        border-radius:50%;
+        opacity:.8;
+        animation:snowFall linear infinite;
+        z-index: 1;
+    }
+
+    @keyframes snowFall{
+        to{transform: translateY(100vh);}
+    }
+</style>
+</head>
+
+<body>
+
+<div class="book">
+    <div class="page left"></div>
+    <div class="page right"></div>
+     <div id="text"></div>
+</div>
+ 
+
+<script>
+/* text typing */
+const textDisplay = document.getElementById("text");
+const message = "Chúc bé Vy mau khỏe, học giỏi và luôn vui vẻ!!!"  + "\nFighting ✨";
+let index = 0;
+
+function typeWriter() {
+    if(index < message.length){
+        textDisplay.innerHTML += message[index];
+        index++;
+        setTimeout(typeWriter, 80); // tốc độ chữ xuất hiện
+    }
+}
+typeWriter();
+
+/* SNOW EFFECT */
+function createSnow(){
+    const snow = document.createElement("div");
+    snow.classList.add("snow");
+    snow.style.left = Math.random()*window.innerWidth + "px";
+    snow.style.animationDuration = (Math.random()*5 + 2) + "s";
+    snow.style.opacity = Math.random();
+    snow.style.transform = `scale(${Math.random()*1.1})`;
+    document.body.appendChild(snow);
+
+    setTimeout(()=>snow.remove(),3000);
+}
+setInterval(createSnow, 50);
+</script>
+
+</body>
+</html>
